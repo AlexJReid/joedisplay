@@ -2,9 +2,9 @@
 
 [AWS IoT](https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html) is a service that makes building _real_ IoT applications easier with important concerns like security, connectivity, discovery, deployment and device provisioning all handled comprehensively.
 
-I'd strongly recommend reading [this introduction](https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html) and also following [this tutorial](https://docs.aws.amazon.com/iot/latest/developerguide/iot-moisture-tutorial.html).
+I'd strongly recommend reading [this introduction](https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html) and also completing [this tutorial](https://docs.aws.amazon.com/iot/latest/developerguide/iot-moisture-tutorial.html).
 
-This document contains notes about the implementation of a replica train departure board using a Raspberry Pi, an OLED panel and AWS IoT. It is not intended to be a guide or tutorial. I make use of the `joedisplay` library that is currently located in this repository. For more information about the approaches taken to make the Raspberry Pi drive the display, consult the [README](README.md#driving-the-display-in-a-generic-way).
+This document contains notes about the implementation of a replica train departure board using a Raspberry Pi, an OLED panel and AWS IoT. It is not intended to be a guide or work out of the box for you. I make use of the `joedisplay` library that is currently located in this repository. For more information about the approaches taken to make the Raspberry Pi drive the display, consult the [README](README.md#driving-the-display-in-a-generic-way).
 
 ## Architecture
 
@@ -14,11 +14,11 @@ This document contains notes about the implementation of a replica train departu
 
 ### Web UI
 
-The web UI uses the AWS SDK for JavaScript to read and update the thing shadow. As the driver program running on the RPi is subscribed to the shadow topics, the changes made to the shadow will immediately take effect. If the RPi is offline, the shadow is still updated and the updated values will be used when it next starts up.
+The web UI uses the AWS SDK for JavaScript to read and update the thing shadow. As the driver program running on the RPi is subscribed to the shadow delta update topic, the changes made to the shadow will immediately take effect. If the RPi is offline, the shadow is still updated and the updated values will be used when it next starts up.
 
-The HTML and JavaScript are hosted from an S3 bucket in _website_ mode. Authorization is handled by entering an AWS access key and secret. This never leaves the browser, but a future improvement would be to make use of AWS Cognito.
+The HTML and JavaScript are hosted from an S3 bucket in _website_ mode. Authorization is handled by entering an AWS access key and secret. This never leaves the browser, but a future improvement would be to make use of AWS Cognito or maybe an intermediate API.
 
-It ain't pretty but it works.
+It ain't pretty, but it works.
 
 ![Web UI](doc/webui.png)
 ![Web UI Config](doc/webui-config.png)
@@ -94,10 +94,11 @@ At a high level you will need:
   - Appropriate IAM role with policies to allow it to publish the topics
 - AWS IoT _thing_ for RPi, with the certificates and keys installed
 - AWS IoT _rule_ as discussed above
+- IAM user for the web UI, should only contain a policy allowing access to a subset of resources in `iot-data`
 - This repository cloned and dependencies installed on the RPi
-- `awsiot_display.py` started and running on the RPi
+- `awsiot_display.py` started and running on the RPi, a `systemd` unit is included if you want to run it at boot time
 
 ## Caveats
 
 - The web UI doesn't use modern approaches, it's a jerry-rigged bit of HTML and JS. I will revisit this. As discussed, it also uses AWS credentials, with the AWS SDK responsible for signing requests made to the `iot-data` service. Naturally the credentials should **only** provide access to the resources within the shadow service that the UI needs to touch.
-- Doesn't run out of the box. May add some automation in the future if people actually want to use this.
+- Doesn't run out of the box. May add some automation to create the AWS resources if people actually use it.
