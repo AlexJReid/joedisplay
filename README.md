@@ -1,4 +1,4 @@
-# joe-display
+# joedisplay
 
 Driving an OLED panel with a Raspberry Pi and AWS IoT
 
