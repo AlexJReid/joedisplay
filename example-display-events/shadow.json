@@ -1,0 +1,10 @@
+{
+    "state": {
+        "reported": {
+            "stage": "train-display-board",
+            "data": {
+                "station_code": "NCL"
+            }
+        }
+    }
+}

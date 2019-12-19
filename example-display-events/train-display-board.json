@@ -1,0 +1,15 @@
+{
+    "stage": "train-display-board",
+    "data": {
+        "refresh_rate": 30,
+        "origin": "NCL",
+        "response_time": "2019-12-11",
+        "valid_for": 60,
+        "departures": [
+            {"departure_time": "14:25", "destination": "Edinburgh Waverley", "platform": "Plat 2", "status": "On time", "calling_at": ["Dunbar"]},
+            {"departure_time": "14:25", "destination": "Metro Centre", "platform": "Plat 2", "status": "On time", "calling_at": ["Dunbar"]},
+            {"departure_time": "14:25", "destination": "Nunthorpe", "platform": "Plat 2", "status": "On time", "calling_at": ["Dunbar"]},
+            {"departure_time": "14:25", "destination": "Nunthorpe", "platform": "Plat 2", "status": "Exp 14:23", "calling_at": ["Dunbar"]}
+        ]
+    }
+}

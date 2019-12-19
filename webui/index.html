@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.587.0.min.js"></script>
+        <script src="requests.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Joe Display</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark navbar-expand-lg bg-dark" style="margin-bottom:1em;">
+            <a class="navbar-brand" href="#">Joe Display</a>
+        </nav>
+        <div class="container-fluid">
+            <div id="error" class="alert alert-danger" style="display:none" role="alert">
+                <span id="errorText">Unknown error.</span>
+            </div>
+            <div id="accepted" class="alert alert-success" style="display:none" role="alert">Your display will update shortly.</div>
+            <form id="form_Main" style="display:none;">
+                <div class="alert alert-secondary" role="alert">
+                    Enter a departure station CRS code. <a href="http://www.railwaycodes.org.uk/crs/CRS0.shtm" target="_blank">List of station codes</a>
+                </div>
+                <div class="form-group">
+                    <input type="text" maxlength="3" class="form-control" id="f_StationInput">
+                </div>
+                <button type="button" class="btn btn-primary mb-2" id="b_UpdateDisplay">Update display</button>
+                <button type="button" class="btn btn-secondary mb-2" id="b_ClearCredentials">Clear credentials</button>
+            </form>
+            <form id="form_Credentials" style="display:none;">
+                <div id="error" class="alert alert-danger" role="alert">
+                    <span id="errorText">Please do not supply overly elevated credentials here.</span>
+                </div>
+                <div class="form-group">
+                    <label for="f_accessKeyInput">Access Key</label>
+                    <input type="text" class="form-control" name="awsAccessKey" id="f_accessKeyInput">
+                </div>
+                <div class="form-group">
+                    <label for="f_secretInput">Secret</label>
+                    <input type="password" class="form-control" name="awsSecret" id="f_secretInput">
+                </div>
+                <div class="form-group">
+                    <label for="f_endpointInput">Endpoint</label>
+                    <input type="text" class="form-control" name="endpoint" id="f_endpointInput">
+                </div>
+                <div class="form-group">
+                    <label for="f_thingNameInput">Thing name</label>
+                    <input type="text" class="form-control" name="thingName" id="f_thingNameInput">
+                </div>
+                <button type="button" class="btn btn-primary mb-2" id="b_SetCredentials">Save</button>
+            </form>
+            <div id="loading" style="display:none">
+                Please wait...
+            </div>    
+        </div>
+        <script src="main.js"></script>
+        <script>init();</script>
+    </body>
+</html>

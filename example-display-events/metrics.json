@@ -1,0 +1,9 @@
+{
+    "stage": "metrics",
+    "metrics": [
+        {"value": "7", "label": "Days to go"},
+        {"value": "2", "label": "Naughty"},
+        {"value": "312", "label": "Presents"},
+        {"value": "9", "label": "Reindeer"}
+    ]
+  }

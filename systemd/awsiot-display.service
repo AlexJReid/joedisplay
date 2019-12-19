@@ -1,0 +1,12 @@
+[Unit]
+Description=AWS IoT Display
+After=multi-user.target
+
+[Service]
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/joe-display
+ExecStart=/usr/bin/python3 /home/pi/joe-display/awsiot_display.py
+
+[Install]
+WantedBy=multi-user.target
