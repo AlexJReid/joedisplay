@@ -19,7 +19,7 @@ This project started when my son asked me for a [replica train departures board]
 
 After getting some off-the-shelf code up and running, I wanted to rethink the software. The train display board case study has been implemented using AWS IoT together with the approaches discussed in this document. See [UK Train Departures Board replica built with a Raspberry Pi and AWS IoT](AWSIOT.md).
 
-If you are not interested in AWS IoT and just want to get an exciting train departures board up and running, you can try out the standalone implementation. You will need to control it by SSH-ing into your Raspberry Pi. See [Quick start for the impatient](#quick-start-for-the-impatient).
+If you are not interested in AWS IoT and just want to get a _very exciting_ train departures board up and running, you can try out the standalone implementation. You will need to control it by SSH-ing into your Raspberry Pi. See [Quick start for the impatient](#quick-start-for-the-impatient).
 
 If you're interested in the generic approach of driving a display, see [Driving the display in a generic way](#driving-the-display-in-a-generic-way).
 
