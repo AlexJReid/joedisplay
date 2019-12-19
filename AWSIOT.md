@@ -53,6 +53,8 @@ An IoT Rule provides a way of interacting with other AWS resources from message 
 
 This Lambda receives events from the above IoT rule action. Using values from the event, it requests data from the Transport API, converts the response into a _display event_ and writes it to the _display input topic_. This causes the panel to update.
 
+A nice side effect of this is that third party API credentials do not need to live on the display device.
+
 Some applications may have a constant stream of events readily available, rendering this _pull_ approach unnecessary. Instead the _event producer_ could subscribe to an SNS topic, Kinesis stream, Kafka topic, web socket API, etc and continually convert the outside events/notifications into _display events_ that get written to the _display input topic_ in the same way.
 
 Code: [event_producer.py](transport/event_producer.py)
