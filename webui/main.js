@@ -13,6 +13,7 @@ var uiStates = {
         show('form_Main');
         hide('form_Credentials');
         hide('error');
+        loadStations(STATIONS);
     },
     'accessDenied': function() {
         hide('form_Main');
@@ -20,7 +21,7 @@ var uiStates = {
         show('error');
         elm('errorText').innerHTML = "Invalid credentials. Please check them and re-enter.";
     }
-}
+};
 
 elm('b_SetCredentials').onclick = function(e) {
     setCredentials(elm('f_accessKeyInput').value, elm('f_secretInput').value);
@@ -44,19 +45,29 @@ elm('b_UpdateDisplay').onclick = function(e) {
             "desired": {
                 "stage": "train-display-board",
                 "data": {
-                    "station_code": elm('f_StationInput').value
+                    "station_code": elm('f_StationSelect').value
                 }
             }
         }
     }).then(function(response) {
         hide('loading');
         show('accepted');
-
         setTimeout(function() {
             hide('accepted')
-        }, 5000);
+        }, 3000);
     });
 };
+
+function loadStations(stations) {
+    var stationSelect = elm('f_StationSelect');
+    for(var i=0;i<stations.length;i++) {
+        var opt = stations[i];
+        var el = document.createElement("option");
+        el.textContent = opt[1];
+        el.value = opt[0];
+        stationSelect.appendChild(el);
+    }
+}
 
 function uiState(state) {
     hide('loading');
@@ -89,9 +100,11 @@ function init() {
             .then(function(shadow) {
                 uiState('loggedIn');
                 try {
-                    elm('f_StationInput').value = shadow.state.reported.data.station_code;
+                    var stationCode = shadow.state.reported.data.station_code;
+                    console.log("Selected station code: " + stationCode);
+                    elm('f_StationSelect').value = stationCode;
                 } catch(e) {
-                    // Location not set in shadow. 
+                    // Location not set in shadow, can ignore.
                 }
             })
             .catch(function(error) {

@@ -18,11 +18,11 @@
             </div>
             <div id="accepted" class="alert alert-success" style="display:none" role="alert">Your display will update shortly.</div>
             <form id="form_Main" style="display:none;">
-                <div class="alert alert-secondary" role="alert">
-                    Enter a departure station CRS code. <a href="http://www.railwaycodes.org.uk/crs/CRS0.shtm" target="_blank">List of station codes</a>
-                </div>
                 <div class="form-group">
-                    <input type="text" maxlength="3" class="form-control" id="f_StationInput">
+                    <label for="f_StationSelect">Departure station</label>
+
+                    <select class="form-control" id="f_StationSelect">
+                    </select>
                 </div>
                 <button type="button" class="btn btn-primary mb-2" id="b_UpdateDisplay">Update display</button>
                 <button type="button" class="btn btn-secondary mb-2" id="b_ClearCredentials">Clear credentials</button>
@@ -53,6 +53,7 @@
                 Please wait...
             </div>    
         </div>
+        <script src="stations.js"></script>
         <script src="main.js"></script>
         <script>init();</script>
     </body>
