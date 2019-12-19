@@ -85,7 +85,6 @@ class IoTDisplayDriver(object):
         delta = payload['state']
         if delta.get('stage'):
             self.state['data'] = {}
-            pass
 
         self.state.update(delta)
 
