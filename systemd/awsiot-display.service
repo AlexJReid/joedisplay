@@ -5,8 +5,8 @@ After=multi-user.target
 [Service]
 User=pi
 Group=pi
-WorkingDirectory=/home/pi/joe-display
-ExecStart=/usr/bin/python3 /home/pi/joe-display/awsiot_display.py
+WorkingDirectory=/home/pi/joedisplay
+ExecStart=/usr/bin/python3 /home/pi/joedisplay/awsiot_display.py
 
 [Install]
 WantedBy=multi-user.target
