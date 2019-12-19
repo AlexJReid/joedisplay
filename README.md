@@ -44,9 +44,7 @@ After getting it working, I realised I wanted:
 - a simple way of displaying _anything_ on the OLED panel without writing more code every time. This is useful for extending this project and also allowing for reuse on other projects.
 - to decouple the _data_ and _display_ aspects
 - ability to update the display from other systems
-- a way of controlling the station shown without having to SSH into the RPi, ideally through an app on a phone
-
-The above goals seemed like a good excuse to try [AWS IoT](https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html), but first I had to write a small library to 
+- a way of controlling the station shown without having to SSH into the RPi, ideally through any web browser not on the same network as the RPi
 
 I will discuss the design in the following sections and will provide some [examples](#Examples) along the way.
 
