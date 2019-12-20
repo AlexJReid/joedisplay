@@ -1,4 +1,4 @@
-# joe-display
+# joedisplay
 
 Driving an OLED panel with a Raspberry Pi and AWS IoT
 
@@ -19,7 +19,7 @@ This project started when my son asked me for a [replica train departures board]
 
 After getting some off-the-shelf code up and running, I wanted to rethink the software. The train display board case study has been implemented using AWS IoT together with the approaches discussed in this document. See [UK Train Departures Board replica built with a Raspberry Pi and AWS IoT](AWSIOT.md).
 
-If you are not interested in AWS IoT and just want to get an exciting train departures board up and running, you can try out the standalone implementation. You will need to control it by SSH-ing into your Raspberry Pi. See [Quick start for the impatient](#quick-start-for-the-impatient).
+If you are not interested in AWS IoT and just want to get a _very exciting_ train departures board up and running, you can try out the standalone implementation. You will need to control it by SSH-ing into your Raspberry Pi. See [Quick start for the impatient](#quick-start-for-the-impatient).
 
 If you're interested in the generic approach of driving a display, see [Driving the display in a generic way](#driving-the-display-in-a-generic-way).
 
@@ -86,7 +86,7 @@ Expose the OLED panel as a _thing_ that accepts _display events_ from other comp
 
 A `Display Event` is a dictionary (encoded as a JSON object when being passed between systems) containing structured data to display on the OLED panel. It must contain a `stage` property to tell the display how to render the data. Data from the display event fills in _slots_ on the stage, such as a train station name or a temperature reading. Stages are covered in more detail in the following section.
 
-A display event does not dictate _how_ the data should be displayed. It just conveys the structure. It is up to the `Stage` to display the event appropriately. Stages are discussed in the next section.
+A display event does not dictate _how_ the data should be displayed. It just conveys the structure. It is up to the `Stage` to display the event appropriately.
 
 A display event looks like this:
 ```
@@ -98,7 +98,7 @@ A display event looks like this:
 
 The `Stage` abstraction provides a plug-in model to render display events to a screen of any type.
 
-A stage contains logic to _draw_ a given display event. Current implementations use `luma.core` to do this. Although `luma.core` supports a variety of devices (oled, lcd, led_matrix), `Stage` implementations for different display types could be added using drivers other than `luma.core` and `PIL`. Taking this to the extreme, a web browser engine even be used for rendering duties if a hi-res/colour screen is available. (Although it sounds crazy at first, I believe web browsers _do_ power a lot of modern display boards - at least judging by the error messages I sometimes see.)
+It contains the logic to _draw_ a given display event. Current implementations use `luma.core` to do this. Although `luma.core` supports a variety of devices (oled, lcd, led_matrix), `Stage` implementations for different display types could be added using drivers other than `luma.core` and `PIL`. Taking this to the extreme, a web browser engine even be used for rendering duties if a hi-res/colour screen is available. (Although it sounds crazy at first, I believe web browsers _do_ power a lot of modern display boards - at least judging by the error messages I sometimes see.)
 
 A stage defines the shape of the dictionary it requires, although this is not formalised anywhere yet. If there is a need to display the data differently, this can be done by adding another `Stage` implementation.
 
@@ -120,11 +120,11 @@ It is easy to change the font, depending on the use case.
 
 ![!Metrics Displayed Font](doc/metrics-font.jpg)
 
-This library will eventually contain more built-in `Stage` implementations. For example, the `metrics` stage shown above has _slots_ for four numbers (with optional labels). Clearly this stage can be reused across several projects. Having a toolbox of built-in stages will lower the barrier to entry for quick projects, particularly when teaching kids who are eager to get immediate results when starting out.
+This library may eventually contain more built-in `Stage` implementations. For example, the `metrics` stage shown above has _slots_ for four numbers (with optional labels). Clearly this stage can be reused across several projects. Having a toolbox of built-in stages will lower the barrier to entry for quick projects, particularly when teaching kids who are eager to get immediate results when starting out.
 
 ## Stage Controller 
 
-A `StageController` receives a display event through its `event_handler` method. It selects a registered `Stage` implementation to use, based on the `stage` property in the event. The _set stage_ remains active until an event that specifies a different stage implementation arrives. In this scenario, the old stage is stopped and replaced with the new one.
+A `StageController` receives a display event. It selects a registered `Stage` implementation to use, based on the `stage` property in the event. The _set stage_ remains active until an event that specifies a different stage implementation arrives. In this scenario, the old stage is stopped and replaced with the new one.
 
 The `StageController` is connected to an event source. This could be another thread within the same process that calls its `event_handler` method, or an API call/Redis channel/MQTT subscription.
 
@@ -136,7 +136,7 @@ By exposing the display as an addressable _thing_ that renders events, this arch
 
 ### Event producer
 
-As the OLED panel _thing_ is effectively a dumb display, external processes can perform an HTTP request or write to a topic to update it. This is nice and flexible as in theory, data can now come from __any__ source and at any frequency. There is no need to poll for new data or refresh the display every minute if the data of higher velocity. Less code needs to run on the hardware driving the display. It also opens up the possibility of using smaller devices (such as microcontrollers running FreeRTOS) than a Raspberry Pi as all that is needed is an MQTT client and stage implementation, probably written in C. That said, considering its specification, the Raspberry Pi Zero W is a bargain.
+As the OLED panel _thing_ is effectively a dumb display, external processes can perform an HTTP request or write to a topic to update it. This is nice and flexible as in theory, data can now come from __any__ source and at any frequency. There is no need to poll for new data or refresh the display every minute if the data of higher velocity. Less code needs to run on the hardware driving the display. It also opens up the possibility of using even smaller devices (such as microcontrollers running FreeRTOS) than a Raspberry Pi as all that is needed is an MQTT client and stage implementation, probably written in C. That said, considering its specification, the Raspberry Pi Zero W is a bargain.
 
 At the simplest level, a thread within the same process as the display driver could serve as an event producer by periodically issuing a request to a remote API. It converts the response into a display event understood by a `Stage` registered on the display and passes it to the `event_handler` method on the stage controller. This causes the panel to update.
 
