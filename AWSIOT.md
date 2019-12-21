@@ -20,8 +20,7 @@ The HTML and JavaScript are hosted from an S3 bucket in _website_ mode. Authoriz
 
 It ain't pretty, but it works.
 
-![Web UI](doc/webui.png)
-![Web UI Config](doc/webui-config.png)
+![Web UI](doc/webui-ios.png)
 
 ### Shadow Service
 
