@@ -7,6 +7,8 @@ Driving an OLED panel with a Raspberry Pi and AWS IoT
 ## Introduction
 
 This repository demonstrates an approach for exposing an OLED panel connected to a Raspberry Pi as a _thing_ that accepts _display events_ from other components. Display events can originate in-process or come from external source such as an HTTP request, Redis PubSub channel or MQTT topic subscription. This allows for very simple programs to interact with the panel, using very little code.
+
+[Discussed at a higher level in this blog post](https://medium.com/@AlexJReid/driving-an-oled-display-with-a-raspberry-pi-and-aws-iot-1b38c57e5140)
   
   * [Design](#driving-the-display-in-a-generic-way)
   * [Examples](#examples)
