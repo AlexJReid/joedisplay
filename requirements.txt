@@ -12,7 +12,7 @@ Jinja2==2.10.3
 luma.core==1.12.0
 luma.oled==3.1.0
 MarkupSafe==1.1.1
-Pillow==5.4.0
+Pillow==8.3.2
 pycrypto==2.6.1
 pyftdi==0.40.6
 PyGObject==3.30.4
