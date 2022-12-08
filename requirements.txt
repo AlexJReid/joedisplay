@@ -1,7 +1,7 @@
 asn1crypto==0.24.0
 autopep8==1.4.4
 AWSIoTPythonSDK==1.4.7
-certifi==2018.8.24
+certifi==2022.12.7
 chardet==3.0.4
 cryptography==2.6.1
 entrypoints==0.3
